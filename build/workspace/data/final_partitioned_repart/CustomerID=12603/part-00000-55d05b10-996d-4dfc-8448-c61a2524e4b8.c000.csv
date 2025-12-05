@@ -1,0 +1,4 @@
+InvoiceNo,StockCode,Description,Quantity,date,price,Country
+577168,22423,REGENCY CAKESTAND 3 TIER,56,11/18/11 10:42,"10,95",Germany
+577168,POST,POSTAGE,7,11/18/11 10:42,18,Germany
+577168,M,Manual,1,11/18/11 10:42,0,Germany

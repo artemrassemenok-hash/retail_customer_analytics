@@ -1,0 +1,3 @@
+InvoiceNo,StockCode,Description,Quantity,date,price,Country
+575498,POST,POSTAGE,1,11/10/11 9:52,18,Germany
+575498,47559B,TEA TIME OVEN GLOVE,12,11/10/11 9:52,"1,25",Germany

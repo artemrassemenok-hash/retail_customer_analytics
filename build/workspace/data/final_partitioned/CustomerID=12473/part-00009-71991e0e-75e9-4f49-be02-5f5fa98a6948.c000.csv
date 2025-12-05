@@ -1,0 +1,8 @@
+InvoiceNo,StockCode,Description,Quantity,date,price,Country
+575632,M,Manual,1,11/10/11 13:44,"40,46",Germany
+575632,M,Manual,1,11/10/11 13:44,"424,06",Germany
+575632,M,Manual,1,11/10/11 13:44,"549,34",Germany
+C575635,M,Manual,-1,11/10/11 13:45,"424,06",Germany
+C575635,M,Manual,-1,11/10/11 13:45,"549,34",Germany
+575636,M,Manual,1,11/10/11 13:46,"40,46",Germany
+C575638,M,Manual,-1,11/10/11 13:48,"40,46",Germany
