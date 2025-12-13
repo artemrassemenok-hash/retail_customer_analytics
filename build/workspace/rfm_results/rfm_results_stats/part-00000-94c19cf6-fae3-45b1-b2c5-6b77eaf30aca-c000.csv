@@ -1,0 +1,6 @@
+segment,customer_count,total_revenue,avg_revenue_per_customer,avg_recency_days
+Lost,144,69749.0,484.37,16.0
+Champions,196,22775.0,116.2,239.9
+Others,164,17529.0,106.88,33.3
+New,56,14845.0,265.09,173.5
+Potential,73,5181.0,70.97,64.3

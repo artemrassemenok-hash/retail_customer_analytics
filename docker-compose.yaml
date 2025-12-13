@@ -10,31 +10,32 @@ x-airflow-common: &airflow-common
     - data-platform
   environment:
     &airflow-common-env
-    AIRFLOW__CORE__EXECUTOR: LocalExecutor  # Упрощаем
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
   volumes:
+    - /var/run/docker.sock:/var/run/docker.sock  # ДОСТУП К DOCKER
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./data:/data
+    - ./build/workspace:/opt/workspace
   depends_on:
     postgres:
       condition: service_healthy
 
 services:
-  # SPARK КЛАСТЕР
   spark-master:
     image: andreper/spark-master:3.0.0
     container_name: spark-master
     networks:
       - data-platform
     ports:
-      - 18080:8080  # Меняем порт, чтобы не конфликтовал с Airflow
+      - 18080:8080
       - 7077:7077
     volumes:
-      - ./workspace:/opt/workspace
+      - ./build/workspace:/opt/workspace
       - ./data:/data
 
   spark-worker-1:
@@ -47,7 +48,7 @@ services:
       SPARK_WORKER_MEMORY: 2g
       SPARK_MASTER: spark://spark-master:7077
     volumes:
-      - ./workspace:/opt/workspace
+      - ./build/workspace:/opt/workspace
       - ./data:/data
     depends_on:
       - spark-master
@@ -61,15 +62,15 @@ services:
       - 8888:8888
       - 4040:4040
     volumes:
-      - ./workspace:/opt/workspace
+      - ./build/workspace:/opt/workspace
       - ./data:/data
     command: jupyter lab --ip='*' --allow-root --no-browser --ServerApp.token='' --ServerApp.password=''
     depends_on:
       - spark-master
 
-  # БАЗА ДАННЫХ
   postgres:
     image: postgres:13
+    container_name: postgres-airflow
     networks:
       - data-platform
     environment:
@@ -78,13 +79,13 @@ services:
       POSTGRES_DB: airflow
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
+      - ./docker/init:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s
       retries: 5
       start_period: 5s
 
-  # AIRFLOW
   airflow-init:
     <<: *airflow-common
     entrypoint: /bin/bash
@@ -126,24 +127,6 @@ services:
     restart: always
     depends_on:
       - airflow-init
-
-  # METABASE
-  metabase:
-    image: metabase/metabase:v0.41.6
-    container_name: metabase
-    networks:
-      - data-platform
-    environment:
-      MB_DB_TYPE: postgres
-      MB_DB_DBNAME: airflow
-      MB_DB_PORT: 5432
-      MB_DB_HOST: postgres
-      MB_DB_USER: airflow
-      MB_DB_PASS: airflow
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
 
 volumes:
   postgres-db-volume:

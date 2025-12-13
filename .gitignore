@@ -200,7 +200,32 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
-# Marimo
-marimo/_static/
-marimo/_lsp/
-__marimo__/
+
+
+
+data/
+workspace/data/
+build/workspace/data/
+
+notebooks/.ipynb_checkpoints/
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+.directory
+
+*~
+*.swp
+*.swo
+
+workspace/scripts/  # если генерируются автоматически
+jars/  # если загружаются автоматически
+logs/  # корневая директория логов
+
+docker-compose.override.yml
