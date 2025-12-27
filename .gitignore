@@ -229,3 +229,56 @@ jars/  # если загружаются автоматически
 logs/  # корневая директория логов
 
 docker-compose.override.yml
+# Spark results
+rfm_results/
+*.csv
+*.crc
+
+# Airflow logs
+logs/
+
+# Spark execution files (PART files)
+part-*
+.part-*
+_SUCCESS
+_spark_metadata/
+
+# Spark checkpoints
+checkpoint/
+*.checkpoint
+
+# CSV files anywhere (чтобы не коммитить результаты)
+**/*.csv
+**/*.parquet
+**/*.json
+
+# All rfm_results directories (в любой папке)
+**/rfm_results/
+
+# Airflow specific
+airflow.cfg
+airflow-webserver.pid
+airflow-scheduler.pid
+unittests.cfg
+webserver_config.py
+
+# Docker and volumes
+metabase-data/
+postgres-data/
+*.db
+*.sqlite3
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Results from any run
+results/
+output/
+export/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
