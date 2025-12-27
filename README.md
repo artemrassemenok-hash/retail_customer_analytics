@@ -6,7 +6,7 @@ Retail Customer Analytics Pipeline
 
 ```bash
 # 1. Клонировать репозиторий
-git clone <repository-url>
+git clone <git@github.com:artemrassemenok-hash/retail_customer_analytics.git>
 cd retail_customer_analytics
 
 # 2. Запустить все сервисы
